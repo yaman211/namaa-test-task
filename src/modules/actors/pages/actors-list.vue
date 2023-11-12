@@ -107,6 +107,7 @@ export default defineComponent({
       ...mapActions({
          fetchActors: 'actors/fetchActors',
          deleteActor: 'actors/deleteActor',
+         resetStore: 'actors/resetStore',
       }),
       onAddNewActor() {
          (this.$refs['actorDialogRef'] as any).open();
@@ -131,6 +132,9 @@ export default defineComponent({
    },
    mounted() {
       this.fetchActors();
+   },
+   unmounted() {
+      this.resetStore();
    },
 });
 </script>

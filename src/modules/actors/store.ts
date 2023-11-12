@@ -33,6 +33,10 @@ const actorsStore: Module<actorsState, StateInterface> = {
       deleteActor(state, idx) {
          state.actors.splice(idx, 1);
       },
+      resetStore(state) {
+         state.loading = false;
+         state.actors = [];
+      },
    },
    actions: {
       fetchActors({ commit }) {
@@ -61,6 +65,9 @@ const actorsStore: Module<actorsState, StateInterface> = {
             state.actors[idx].remove();
             commit('deleteActor', idx);
          }
+      },
+      resetStore({ commit }) {
+         commit('resetStore');
       },
    },
 };
