@@ -1,1 +1,21 @@
 // app global css in SCSS form
+
+body {
+   background-color: #f5f5f5;
+   font-family: poppins, sans-serif;
+}
+
+$border-size: (
+   'xs': 6px,
+   'sm': 8px,
+   'md': 10px,
+   'lg': 12px,
+   'xl': 14px,
+   'none': 0px,
+);
+
+@each $name, $size in $border-size {
+   .rounded-#{$name} {
+      border-radius: $size !important;
+   }
+}
