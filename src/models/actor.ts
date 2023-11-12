@@ -3,18 +3,18 @@ import { LocalStorage } from 'quasar';
 const LS_KEY = 'actors';
 
 export enum ActorRole {
-   BACKGROUND,
-   CAMEO,
-   RECURRING,
-   SIDE,
-   REGULAR,
+   BACKGROUND = 'Background',
+   CAMEO = 'Cameo',
+   RECURRING = 'Recurring',
+   SIDE = 'Side',
+   REGULAR = 'Regular',
 }
 
 class Actor {
    id: number;
    name!: string;
    age!: number;
-   joinDate!: Date | string;
+   joinDate!: Date;
    role!: ActorRole;
 
    constructor(obj: any) {
@@ -37,15 +37,19 @@ class Actor {
    }
 
    update(newData: Actor) {
-      Object.assign(this, newData);
+      const newActor = new Actor(newData);
+      newActor.id = this.id;
+      newActor.joinDate = this.joinDate;
+
       const allActors = Actor.#getActorsFromLS();
       const idx = allActors.findIndex((actor) => actor.id === this.id);
       if (idx != -1) {
-         allActors[idx] = this;
+         allActors[idx] = newActor;
          Actor.#setActorsToLS(allActors);
       } else {
          console.error('Actor Not Found In LocalStorage', idx);
       }
+      return newActor;
    }
    remove() {
       const allActors = Actor.#getActorsFromLS();
@@ -63,7 +67,7 @@ class Actor {
    }
 
    static createActor(data: Actor) {
-      const actor = new Actor(data);
+      const actor = new Actor({ ...data, joinDate: new Date() });
 
       const allActors = this.#getActorsFromLS();
       allActors.push(actor);

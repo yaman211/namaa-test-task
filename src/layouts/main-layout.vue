@@ -1,5 +1,5 @@
 <template>
-   <q-layout view="hHh Lpr lff">
+   <q-layout view="hHh Lpr lff" style="min-height: 690px">
       <q-header elevated>
          <q-toolbar>
             <q-btn
@@ -23,7 +23,13 @@
          show-if-above
          mini-to-overlay
          bordered
+         :width="250"
       >
+         <q-img
+            :src="require('assets/logo_en.png')"
+            class="q-my-md q-ml-xs"
+            width="130px"
+         />
          <q-list padding>
             <q-item
                v-for="(item, i) in sideBarLinks"

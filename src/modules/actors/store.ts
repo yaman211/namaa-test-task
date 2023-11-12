@@ -12,6 +12,11 @@ const actorsStore: Module<actorsState, StateInterface> = {
       actors: [],
       loading: false,
    }),
+   getters: {
+      actors(state) {
+         return state.actors;
+      },
+   },
    mutations: {
       setLoading(state, payload) {
          state.loading = payload;
@@ -21,6 +26,9 @@ const actorsStore: Module<actorsState, StateInterface> = {
       },
       addActor(state, payload) {
          state.actors.push(payload);
+      },
+      updateActor(state, { idx, data }) {
+         state.actors.splice(idx, 1, data);
       },
       deleteActor(state, idx) {
          state.actors.splice(idx, 1);
@@ -40,10 +48,11 @@ const actorsStore: Module<actorsState, StateInterface> = {
          const actor = Actor.createActor(data);
          commit('addActor', actor);
       },
-      updateActor({ state }, { id, data }) {
-         const actor = state.actors.find((actor) => actor.id === id);
-         if (actor) {
-            actor.update(data);
+      updateActor({ state, commit }, { id, data }) {
+         const idx = state.actors.findIndex((actor) => actor.id === id);
+         if (idx + 1) {
+            const newActor = state.actors[idx].update(data);
+            commit('updateActor', { idx, data: newActor });
          }
       },
       deleteActor({ state, commit }, id) {
