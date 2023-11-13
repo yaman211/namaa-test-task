@@ -6,6 +6,7 @@ const routes: RouteRecordRaw[] = [
    {
       path: '/',
       component: () => import('layouts/main-layout.vue'),
+      redirect: '/actors',
       children: [actorsModuleRoutes, moviesModuleRoutes],
    },
 
