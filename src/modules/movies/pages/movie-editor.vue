@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-center q-mt-lg">
       <q-card class="rounded-md q-pa-md" style="width: 60vw">
-         <div class="text-secondary text-h4 text-weight-bold q-mb-md">
+         <div class="text-secondary text-h4 text-weight-medium q-mb-md">
             {{ isEdit ? 'Edit' : 'Create' }} Movie
          </div>
 

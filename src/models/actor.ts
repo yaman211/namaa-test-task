@@ -83,6 +83,17 @@ class Actor {
          allActors.some((actor) => actor.id === id)
       );
    }
+
+   static getActorsByIds(actorsIds: string[]) {
+      const allActors = this.#getActorsFromLS();
+      return this.cleanActorsArray(actorsIds).reduce(
+         (prev: any, id: string) => {
+            const actor = allActors.find((a) => a.id == id);
+            return [...prev, actor];
+         },
+         []
+      ) as Actor[];
+   }
 }
 
 export { Actor };

@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 import { StateInterface } from 'src/store/index';
 import { Movie } from 'src/models/movie';
+import { Actor } from 'src/models/actor';
 export interface moviesState {
    movies: Movie[];
    loading: boolean;
@@ -50,6 +51,9 @@ const moviesStore: Module<moviesState, StateInterface> = {
       },
       getMovieById(_, id) {
          return Movie.getById(id);
+      },
+      getMovieActors(_, actorsIds) {
+         return Actor.getActorsByIds(actorsIds);
       },
       createMovie({ commit }, data) {
          const movie = Movie.createMovie(data);

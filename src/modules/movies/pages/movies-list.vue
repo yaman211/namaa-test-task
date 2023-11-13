@@ -81,6 +81,8 @@ const columns = [
       field: 'description',
       align: 'center',
       format: (val: any) => (val ? val : '--'),
+      style: 'max-width: 350px;',
+      classes: 'long-text-wrap',
    },
    {
       name: 'actions',
