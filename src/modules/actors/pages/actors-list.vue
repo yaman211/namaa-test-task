@@ -3,7 +3,7 @@
       <div class="flex justify-between items-center q-pt-md q-pb-xl q-pl-md">
          <div class="text-secondary text-h4 text-weight-bold">Actors List</div>
          <q-btn
-            color="primary"
+            color="secondary"
             icon="add"
             label="Add New Actor"
             @click="onAddNewActor"

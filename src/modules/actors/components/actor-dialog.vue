@@ -60,7 +60,7 @@
 
             <q-btn
                :label="isEdit ? 'Save' : 'Create'"
-               color="primary"
+               color="secondary"
                class="full-width"
                type="submit"
             />
