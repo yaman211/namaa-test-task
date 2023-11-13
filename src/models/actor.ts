@@ -1,4 +1,5 @@
 import { LocalStorage } from 'quasar';
+import { getUUID } from 'src/utils';
 
 const LS_KEY = 'actors';
 
@@ -11,14 +12,14 @@ export enum ActorRole {
 }
 
 class Actor {
-   id: number;
+   id: string;
    name!: string;
    age!: number;
    joinDate!: Date;
    role!: ActorRole;
 
    constructor(obj: any) {
-      this.id = Math.random();
+      this.id = getUUID();
       Object.keys(obj).forEach((key) => {
          this[key as keyof this] = obj[key];
       });
@@ -47,7 +48,7 @@ class Actor {
          allActors[idx] = newActor;
          Actor.#setActorsToLS(allActors);
       } else {
-         console.error('Actor Not Found In LocalStorage', idx);
+         console.error('Actor Not Found In LocalStorage', this);
       }
       return newActor;
    }
@@ -58,7 +59,7 @@ class Actor {
          allActors.splice(idx, 1);
          Actor.#setActorsToLS(allActors);
       } else {
-         console.error('Actor Not Found In LocalStorage', idx);
+         console.error('Actor Not Found In LocalStorage', this);
       }
    }
 
@@ -74,6 +75,13 @@ class Actor {
       this.#setActorsToLS(allActors);
 
       return actor;
+   }
+
+   static cleanActorsArray(actorsIds: string[]) {
+      const allActors = this.#getActorsFromLS();
+      return actorsIds.filter((id) =>
+         allActors.some((actor) => actor.id === id)
+      );
    }
 }
 
