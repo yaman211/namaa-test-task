@@ -24,6 +24,7 @@
          mini-to-overlay
          bordered
          :width="250"
+         class="overflow-hidden"
       >
          <q-img
             :src="require('assets/logo_en.png')"
@@ -49,7 +50,10 @@
          </q-list>
       </q-drawer>
 
-      <q-page-container class="q-ma-md">
+      <q-page-container
+         class="q-ma-md"
+         style="margin-left: 5%; margin-right: 5%"
+      >
          <router-view />
       </q-page-container>
    </q-layout>
@@ -63,6 +67,11 @@ const sideBarLinks = [
       title: 'Actors',
       icon: 'groups',
       path: '/actors',
+   },
+   {
+      title: 'Movies',
+      icon: 'movie',
+      path: '/movies',
    },
 ];
 

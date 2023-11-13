@@ -8,7 +8,9 @@ import {
 } from 'vuex';
 
 import actors from '../modules/actors/store';
+import movies from '../modules/movies/store';
 import { actorsState } from '../modules/actors/store';
+import { moviesState } from '../modules/movies/store';
 
 /*
  * If not building with SSR mode, you can
@@ -22,6 +24,7 @@ import { actorsState } from '../modules/actors/store';
 export interface StateInterface {
    // Define your own store structure, using submodules if needed
    actors: actorsState;
+   movies: moviesState;
    // example: ExampleStateInterface;
    // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
    example: unknown;
@@ -49,6 +52,7 @@ export default store(function (/* { ssrContext } */) {
    const Store = createStore<StateInterface>({
       modules: {
          actors,
+         movies,
       },
 
       // enable strict mode (adds overhead!)
