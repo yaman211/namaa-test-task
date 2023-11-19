@@ -66,7 +66,7 @@ const moviesStore: Module<moviesState, StateInterface> = {
             commit('updateMovie', { idx, data: newMovie });
          }
       },
-      deleteActor({ state, commit }, id) {
+      deleteMovie({ state, commit }, id) {
          const idx = state.movies.findIndex((movie) => movie.id === id);
          if (idx + 1) {
             state.movies[idx].remove();
