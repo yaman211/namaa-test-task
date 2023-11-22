@@ -144,6 +144,9 @@ export default defineComponent({
    mounted() {
       this.fetchMovies();
    },
+   unmounted() {
+      this.resetStore();
+   },
    components: { MovieFilters },
 });
 </script>
