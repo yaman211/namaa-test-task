@@ -13,7 +13,7 @@
       </div>
       <q-card class="q-pa-md rounded-md">
          <div class="q-pb-md">
-            <movie-filters @filter-change="onFilterChange" />
+            <movie-filters />
          </div>
          <q-separator class="q-mb-md" />
          <q-table :columns="columns" :rows="data">
@@ -139,9 +139,6 @@ export default defineComponent({
             .onOk(() => {
                this.deleteMovie(movie.id);
             });
-      },
-      onFilterChange(filters: any) {
-         console.log({ filters });
       },
    },
    mounted() {

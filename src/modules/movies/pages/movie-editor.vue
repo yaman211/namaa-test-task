@@ -118,7 +118,6 @@ export default defineComponent({
       }),
       async onSubmit() {
          const actors = await (this.$refs['actorsTableRef'] as any).getActors();
-         console.log({ actors });
          if (!actors || actors.length === 0) return;
 
          (this.movie.actors as Actor[]) = [...actors];
