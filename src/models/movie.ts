@@ -9,18 +9,20 @@ class Movie {
    title!: string;
    description?: string;
    year!: number;
-   actorsIds!: string[];
+   actors!: Actor[];
 
    constructor(obj: any) {
       this.id = getUUID();
       Object.keys(obj).forEach((key) => {
          this[key as keyof this] = obj[key];
       });
-      this.actorsIds = Actor.cleanActorsArray(this.actorsIds);
+      this.actors = this.actors.map((actorObject) => {
+         return new Actor(actorObject);
+      });
    }
 
    public get actorsCount(): number {
-      return this.actorsIds.length;
+      return this.actors.length;
    }
 
    static #getMoviesFromLS() {

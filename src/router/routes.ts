@@ -1,4 +1,3 @@
-import { actorsModuleRoutes } from 'src/modules/actors/routes';
 import { moviesModuleRoutes } from 'src/modules/movies/routes';
 import { RouteRecordRaw } from 'vue-router';
 
@@ -6,8 +5,8 @@ const routes: RouteRecordRaw[] = [
    {
       path: '/',
       component: () => import('layouts/main-layout.vue'),
-      redirect: '/actors',
-      children: [actorsModuleRoutes, moviesModuleRoutes],
+      redirect: '/movies',
+      children: [moviesModuleRoutes],
    },
 
    // Always leave this as last one,

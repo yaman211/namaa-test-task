@@ -1,5 +1,5 @@
 <template>
-   <q-layout view="hHh Lpr lff" style="min-height: 690px">
+   <q-layout view="hHh Lpr lff" style="min-height: calc(100vh - 50px)">
       <q-header elevated>
          <q-toolbar>
             <q-btn
@@ -63,11 +63,6 @@
 import { defineComponent } from 'vue';
 
 const sideBarLinks = [
-   {
-      title: 'Actors',
-      icon: 'groups',
-      path: '/actors',
-   },
    {
       title: 'Movies',
       icon: 'movie',

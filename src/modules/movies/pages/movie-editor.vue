@@ -49,10 +49,10 @@
                class="q-mb-md"
             />
 
-            <ActorsSelect
-               v-if="!isEdit || movie.actorsIds.length"
-               :initialSelected="movie.actorsIds"
-               @input="onSelectActor"
+            <ActorsTable
+               v-if="!isEdit || movie.actors.length"
+               ref="actorsTableRef"
+               :initialData="movie.actors"
             />
 
             <div class="flex justify-end q-gutter-sm">
@@ -77,13 +77,15 @@
 import { defineComponent } from 'vue';
 import { mapActions } from 'vuex';
 import { Form, Field } from 'vee-validate';
-import ActorsSelect from 'src/modules/actors/components/actors-select.vue';
+
+import ActorsTable from 'src/components/actors-table.vue';
+import { Actor } from 'src/models/actor';
 
 export default defineComponent({
    components: {
       VForm: Form,
       VField: Field,
-      ActorsSelect,
+      ActorsTable,
    },
    props: {
       id: {
@@ -96,7 +98,7 @@ export default defineComponent({
             title: '',
             description: '',
             year: '',
-            actorsIds: [],
+            actors: [],
          },
       };
    },
@@ -105,7 +107,7 @@ export default defineComponent({
          return !!this.id;
       },
       selectedActorsCount() {
-         return this.movie.actorsIds.length;
+         return this.movie.actors.length;
       },
    },
    methods: {
@@ -114,7 +116,12 @@ export default defineComponent({
          updateMovie: 'movies/updateMovie',
          getMovieById: 'movies/getMovieById',
       }),
-      onSubmit() {
+      async onSubmit() {
+         const actors = await (this.$refs['actorsTableRef'] as any).getActors();
+         console.log({ actors });
+         if (!actors || actors.length === 0) return;
+
+         (this.movie.actors as Actor[]) = [...actors];
          if (this.isEdit) {
             this.updateMovie({
                id: this.$props.id,
@@ -125,9 +132,6 @@ export default defineComponent({
             this.createMovie(this.movie);
             this.$router.push('/movies');
          }
-      },
-      onSelectActor(actors: string[]) {
-         (this.movie.actorsIds as string[]) = actors;
       },
    },
    async created() {

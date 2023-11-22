@@ -7,9 +7,7 @@ import {
    useStore as vuexUseStore,
 } from 'vuex';
 
-import actors from '../modules/actors/store';
 import movies from '../modules/movies/store';
-import { actorsState } from '../modules/actors/store';
 import { moviesState } from '../modules/movies/store';
 
 /*
@@ -23,7 +21,6 @@ import { moviesState } from '../modules/movies/store';
 
 export interface StateInterface {
    // Define your own store structure, using submodules if needed
-   actors: actorsState;
    movies: moviesState;
    // example: ExampleStateInterface;
    // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
@@ -51,7 +48,6 @@ declare module 'vuex' {
 export default store(function (/* { ssrContext } */) {
    const Store = createStore<StateInterface>({
       modules: {
-         actors,
          movies,
       },
 

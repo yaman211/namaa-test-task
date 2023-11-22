@@ -12,10 +12,24 @@
          />
       </div>
       <q-card class="q-pa-md rounded-md">
+         <div class="q-pb-md">
+            <movie-filters @filter-change="onFilterChange" />
+         </div>
+         <q-separator class="q-mb-md" />
          <q-table :columns="columns" :rows="data">
+            <template v-slot:body-cell-title="props">
+               <q-td :props="props">
+                  <div class="long-text-wrap">{{ props.value }}</div>
+               </q-td>
+            </template>
+            <template v-slot:body-cell-description="props">
+               <q-td :props="props">
+                  <div class="long-text-wrap">{{ props.value }}</div>
+               </q-td>
+            </template>
             <template v-slot:body-cell-actions="props">
                <q-td :props="props">
-                  <div class="flex justify-evenly">
+                  <div class="flex justify-evenly q-gutter-y-xs">
                      <q-btn
                         icon="preview"
                         color="secondary"
@@ -55,6 +69,7 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 
 import { Movie } from 'src/models/movie';
+import MovieFilters from './movie-filters.vue';
 
 const columns = [
    {
@@ -62,6 +77,7 @@ const columns = [
       label: 'Movie Name',
       field: 'title',
       align: 'center',
+      style: 'max-width: 350px;',
    },
    {
       name: 'year',
@@ -82,7 +98,6 @@ const columns = [
       align: 'center',
       format: (val: any) => (val ? val : '--'),
       style: 'max-width: 350px;',
-      classes: 'long-text-wrap',
    },
    {
       name: 'actions',
@@ -125,9 +140,13 @@ export default defineComponent({
                this.deleteMovie(movie.id);
             });
       },
+      onFilterChange(filters: any) {
+         console.log({ filters });
+      },
    },
    mounted() {
       this.fetchMovies();
    },
+   components: { MovieFilters },
 });
 </script>

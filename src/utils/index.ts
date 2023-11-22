@@ -3,8 +3,7 @@ export const dateTimeFormatter = (date: Date) => {
       return;
    }
    return new Intl.DateTimeFormat('en-US', {
-      timeStyle: 'medium',
-      dateStyle: 'short',
+      dateStyle: 'long',
    }).format(typeof date == 'string' ? new Date(date) : date);
 };
 

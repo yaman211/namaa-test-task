@@ -33,6 +33,15 @@ defineRule('minMax', (value: number, [min, max]: [number, number]) => {
    return true;
 });
 
+defineRule('date', (value: string) => {
+   if (!value) {
+      return true;
+   }
+   const d = new Date(value);
+
+   return !isNaN(d.getTime()) || 'Invalid Date';
+});
+
 export default boot(() => {
    return;
 });

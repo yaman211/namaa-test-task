@@ -1,21 +1,48 @@
 import { Module } from 'vuex';
 import { StateInterface } from 'src/store/index';
 import { Movie } from 'src/models/movie';
-import { Actor } from 'src/models/actor';
 export interface moviesState {
    movies: Movie[];
    loading: boolean;
+   filters: moviesFilters;
 }
+
+type Nullable<T> = T | undefined | null;
+
+type moviesFilters = {
+   title: Nullable<string>;
+   year: Nullable<number>;
+   numberOfActors: Nullable<number>;
+};
 
 const moviesStore: Module<moviesState, StateInterface> = {
    namespaced: true,
    state: (): moviesState => ({
       movies: [],
+      filters: {
+         title: undefined,
+         year: undefined,
+         numberOfActors: undefined,
+      },
       loading: false,
    }),
    getters: {
       movies(state) {
-         return state.movies;
+         return state.movies
+            .filter(
+               (movie) =>
+                  !state.filters.title ||
+                  movie.title.includes(state.filters.title)
+            )
+            .filter(
+               (movie) =>
+                  !state.filters.year || movie.year === state.filters.year
+            )
+            .filter(
+               (movie) =>
+                  !state.filters.numberOfActors ||
+                  movie.actorsCount == state.filters.numberOfActors
+            );
       },
    },
    mutations: {
@@ -34,9 +61,17 @@ const moviesStore: Module<moviesState, StateInterface> = {
       deleteMovie(state, idx) {
          state.movies.splice(idx, 1);
       },
+      setFilters(state, filters) {
+         state.filters = filters;
+      },
       resetStore(state) {
          state.loading = false;
          state.movies = [];
+         state.filters = {
+            title: undefined,
+            year: undefined,
+            numberOfActors: undefined,
+         };
       },
    },
    actions: {
@@ -51,9 +86,6 @@ const moviesStore: Module<moviesState, StateInterface> = {
       },
       getMovieById(_, id) {
          return Movie.getById(id);
-      },
-      getMovieActors(_, actorsIds) {
-         return Actor.getActorsByIds(actorsIds);
       },
       createMovie({ commit }, data) {
          const movie = Movie.createMovie(data);
